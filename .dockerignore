@@ -1,0 +1,9 @@
+.direnv
+.git
+.github
+.env
+.env.*
+dist
+target
+tmp
+*.log
