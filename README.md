@@ -26,6 +26,8 @@ docker build -t consul-cleanup .
 docker run consul-cleanup # this will display the help message
 ```
 
+Images are published to GitHub Container Registry as `ghcr.io/run4w4y/consul-cleanup` on pushes to `main` and version tags.
+
 ## Local development
 This repository includes a Nix flake and `.envrc` for a reproducible development shell.
 
@@ -97,7 +99,7 @@ Authorization: Bearer <token>
 ```
 
 ## Demo and deployment examples
-The `examples/nomad-pack` directory contains a sanitized Nomad Pack based on the original deployment setup.
+The `examples/nomad-pack` directory contains an example Nomad Pack for running `consul-cleanup` as a service job.
 
 The `examples/terraform` directory contains focused Terraform/OpenTofu examples for the required Consul, Nomad, and Vault ACL pieces.
 

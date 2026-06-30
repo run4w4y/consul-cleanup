@@ -2,7 +2,7 @@
 
 `consul-cleanup` needs one token for Consul and one token for Nomad.
 
-The examples below are based on the deployment Terraform setup this service was originally used with. Scope the prefixes/namespaces more tightly if your cluster layout allows it.
+The examples below show the permissions needed by the cleanup task. Scope the prefixes/namespaces more tightly if your cluster layout allows it.
 
 ## Consul
 
@@ -18,7 +18,7 @@ node_prefix "" {
 }
 ```
 
-The original Terraform shape used a Consul ACL policy named `consul-cleanup` and then exposed it through a Vault Consul secrets role:
+When using Vault dynamic Consul credentials, expose the Consul ACL policy through a Vault Consul secrets role:
 
 ```hcl
 resource "vault_consul_secret_backend_role" "consul-cleanup" {
@@ -30,7 +30,7 @@ resource "vault_consul_secret_backend_role" "consul-cleanup" {
 
 ## Nomad
 
-The cleanup task must be able to inspect allocations and jobs. The original setup used an `allocation-observer` policy:
+The cleanup task must be able to inspect allocations and jobs. One suitable Nomad policy is:
 
 ```hcl
 namespace "*" {
@@ -82,7 +82,7 @@ resource "vault_kv_secret_v2" "consul_cleanup_secret" {
 
 ## Terraform examples
 
-The `examples/terraform` directory contains focused examples extracted from the original deployment pattern.
+The `examples/terraform` directory contains focused examples for common credential setups.
 
 Use `examples/terraform/vault-dynamic-credentials` when the Nomad job should render short-lived Consul and Nomad credentials from Vault. This matches the `examples/nomad-pack` template.
 

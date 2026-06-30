@@ -4,10 +4,18 @@ The easiest demonstration path is to run `consul-cleanup` as a Nomad service job
 
 ## Shape
 
-1. Build and publish an image:
+1. Choose an image tag.
+
+   The default Nomad Pack values use the image published from the `main` branch:
 
    ```bash
-   docker build -t ghcr.io/run4w4y/consul-cleanup:demo .
+   docker pull ghcr.io/run4w4y/consul-cleanup:latest
+   ```
+
+   For a release deployment, prefer a version tag:
+
+   ```bash
+   docker pull ghcr.io/run4w4y/consul-cleanup:v0.1.0
    ```
 
 2. Create the Consul, Nomad, and Vault policies described in `docs/acl.md`.
@@ -28,8 +36,16 @@ The easiest demonstration path is to run `consul-cleanup` as a Nomad service job
    ```bash
    nomad-pack render examples/nomad-pack \
      --parser-v1 \
+     -f examples/nomad-pack/vars/example.hcl
+   ```
+
+   To use a release image, pass the tag explicitly:
+
+   ```bash
+   nomad-pack render examples/nomad-pack \
+     --parser-v1 \
      -f examples/nomad-pack/vars/example.hcl \
-     --var docker_image_tag=demo
+     --var docker_image_tag=v0.1.0
    ```
 
 4. Run the rendered job in Nomad.
